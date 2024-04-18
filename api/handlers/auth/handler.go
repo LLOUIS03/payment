@@ -3,6 +3,7 @@ package auth
 import (
 	"net/http"
 
+	"github.com/deuna/payment/api/handlers"
 	authSvc "github.com/deuna/payment/domain/services/auth"
 	"github.com/labstack/echo/v4"
 )
@@ -22,7 +23,6 @@ func (a handler) CreateToken(c echo.Context) error {
 	req := CreateTokenRequest{}
 
 	if err := c.Bind(&req); err != nil {
-		// fmt.Println("Mar: ", err.Error())
 		return c.JSON(http.StatusBadRequest, "invalid request")
 	}
 
@@ -30,7 +30,7 @@ func (a handler) CreateToken(c echo.Context) error {
 
 	token, err := a.authService.CreateToken(ctx, req.Email, req.Password)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return handlers.HandleError(c, err)
 	}
 
 	return c.JSON(http.StatusOK, CreateTokenResponse{Token: *token})

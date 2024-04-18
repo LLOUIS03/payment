@@ -20,7 +20,7 @@ func (e *ValidationError) IsSuccess() bool {
 }
 
 // IsFailure returns true if there are errors
-func (e *ValidationError) IsFailure() bool {
+func (e ValidationError) IsFailure() bool {
 	return !e.IsSuccess()
 }
 

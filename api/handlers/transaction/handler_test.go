@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -287,8 +286,6 @@ func TestListTx_HappyPath(t *testing.T) {
 
 	respBody, err := io.ReadAll(respHttp.Body)
 	assert.NoError(t, err)
-
-	fmt.Println(string(respBody))
 
 	resp := ListTxResponse{}
 	err = json.Unmarshal(respBody, &resp)

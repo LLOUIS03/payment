@@ -94,9 +94,7 @@ func (t *transaction) bankRefund(ctx context.Context, id uuid.UUID) error {
 
 	if retryErr != nil {
 		strBuilder := strings.Builder{}
-		fmt.Println("Value:", resp)
 		for i := 0; i < resp.Attempts(); i++ {
-			fmt.Println("index: ", i, "Value:", resp[i])
 			strBuilder.WriteString(fmt.Sprintf("Attemp %d: %s\n", i, resp[i].Error()))
 		}
 		return errors.Wrapf(retryErr, "Calling %v", strBuilder.String())
@@ -115,7 +113,6 @@ func (t *transaction) bankPlace(ctx context.Context, id uuid.UUID, amount float6
 		Run()
 
 	if retryErr != nil {
-		fmt.Println("retryErr.Error():", retryErr.Error(), "Vas", errors.As(retryErr, &domainerrors.UnauthorizedTranError{}))
 		strBuilder := strings.Builder{}
 		for i := 0; i < resp.Attempts(); i++ {
 			strBuilder.WriteString(fmt.Sprintf("Attemp %d: %s", i, resp[i].Error()))

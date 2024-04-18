@@ -3,6 +3,7 @@ package transaction
 import (
 	"net/http"
 
+	"github.com/deuna/payment/api/handlers"
 	authsvc "github.com/deuna/payment/domain/services/auth"
 	transactionSvc "github.com/deuna/payment/domain/services/transaction"
 	"github.com/golang-jwt/jwt/v5"
@@ -37,7 +38,7 @@ func (h *handler) Place(c echo.Context) error {
 
 	id, err := h.transactionService.Place(ctx, req.Amount, claims.ID)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return handlers.HandleError(c, err)
 	}
 
 	return c.JSON(http.StatusOK, id)
@@ -63,7 +64,7 @@ func (h *handler) Refund(c echo.Context) error {
 
 	err := h.transactionService.Refund(ctx, req.ID, claims.ID)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return handlers.HandleError(c, err)
 	}
 
 	return c.JSON(http.StatusOK, nil)
@@ -83,7 +84,7 @@ func (h *handler) ListTx(c echo.Context) error {
 
 	txs, err := h.transactionService.ListTx(ctx, claims.ID)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return handlers.HandleError(c, err)
 	}
 
 	return c.JSON(http.StatusOK, ListTxResponse{Txs: txs})
