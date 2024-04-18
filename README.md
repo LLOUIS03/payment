@@ -28,3 +28,9 @@ Once you have [installed Docker][docker-install]
 
 [golang-install]:   http://golang.org/doc/install.html#releases
 [docker-install]:   https://docs.docker.com/engine/install/
+
+## Steps
+
+First you need to create a JWT Token with using the previos credentials
+
+Call Place, Refund and ListTx endpoints using your JWT token
