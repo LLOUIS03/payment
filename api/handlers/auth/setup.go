@@ -8,6 +8,6 @@ import (
 const route = "/v1/auth/token"
 
 func SetupHandler(e *echo.Echo, a authSvc.Authorization) {
-	handler := auth{authService: a}
+	handler := handler{authService: a}
 	e.POST(route, handler.CreateToken)
 }

@@ -12,7 +12,6 @@ import (
 // Authenticator is the interface that wraps the authenticator methods
 type Authorization interface {
 	CreateToken(context.Context, string, string) (*string, error)
-	// VeryfyToken(context.Context, string) error
 }
 
 type authenticator struct {
@@ -25,22 +24,6 @@ func NewService(queries repos.Querier) Authorization {
 		queries: queries,
 	}
 }
-
-// VeryfyToken verifies the token
-// func (a *authenticator) VeryfyToken(ctx context.Context, tokenStr string) error {
-// 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (any, error) {
-// 		return Secret, nil
-// 	})
-// 	if err != nil {
-// 		return domainerrors.NewCredentialsExpiredError(err)
-// 	}
-
-// 	if !token.Valid {
-// 		return domainerrors.NewCredentialsExpiredError(err)
-// 	}
-
-// 	return nil
-// }
 
 // CreateToken creates a token for the user
 func (a *authenticator) CreateToken(ctx context.Context, email, password string) (*string, error) {

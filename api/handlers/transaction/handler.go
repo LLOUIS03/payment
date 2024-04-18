@@ -81,10 +81,10 @@ func (h *handler) ListTx(c echo.Context) error {
 	user := c.Get(userIDKey).(*jwt.Token)
 	claims := user.Claims.(*authsvc.JwtCustomClaims)
 
-	id, err := h.transactionService.ListTx(ctx, claims.ID)
+	txs, err := h.transactionService.ListTx(ctx, claims.ID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return c.JSON(http.StatusOK, id)
+	return c.JSON(http.StatusOK, ListTxResponse{Txs: txs})
 }

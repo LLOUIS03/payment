@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type auth struct {
+type handler struct {
 	authService authSvc.Authorization
 }
 
@@ -18,10 +18,11 @@ type auth struct {
 // @Param requestBody body CreateTokenRequest true "Generate token"
 // @Success 200 {object} CreateTokenResponse
 // @Router /v1/auth/token [post]
-func (a auth) CreateToken(c echo.Context) error {
+func (a handler) CreateToken(c echo.Context) error {
 	req := CreateTokenRequest{}
 
 	if err := c.Bind(&req); err != nil {
+		// fmt.Println("Mar: ", err.Error())
 		return c.JSON(http.StatusBadRequest, "invalid request")
 	}
 
