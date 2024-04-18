@@ -1,0 +1,15 @@
+{
+    "database":{
+        "conectionString":"user=postgres password=payment dbname=postgres sslmode=disable port=5432 host=postgres",
+        "migrationsDir": "./infraestructure/db/",
+        "dbTimeout": 6000000000,
+        "maxOpenConns": 30,
+        "maxIdleConns": 15
+    },
+    "server":{
+        "port": ":8090",
+        "logLevel": "",
+        "baseAddr": "/v1/api",
+        "timeout": 6000000000
+    }
+}

@@ -1,0 +1,128 @@
+definitions:
+  auth.CreateTokenRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  auth.CreateTokenResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  repos.Tx:
+    properties:
+      amount:
+        type: number
+      create_at:
+        type: string
+      id:
+        type: string
+      merchant_id:
+        type: string
+      tx_type:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  transaction.ListTxResponse:
+    properties:
+      transactions:
+        items:
+          $ref: '#/definitions/repos.Tx'
+        type: array
+    type: object
+  transaction.PlaceRequest:
+    properties:
+      amount:
+        type: number
+    type: object
+  transaction.RefundRequest:
+    properties:
+      id:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Payment API
+  title: Payment API
+  version: "1.0"
+paths:
+  /v1/api/listtx:
+    get:
+      description: List all the transactions
+      parameters:
+      - description: 'The JWT token. Example: Bearer {token}'
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/transaction.ListTxResponse'
+      summary: ListTx
+      tags:
+      - Transaction
+  /v1/api/place:
+    post:
+      description: Place a transaction
+      parameters:
+      - description: 'The JWT token. Example: Bearer {token}'
+        in: header
+        name: Authorization
+        type: string
+      - description: Generate token
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/transaction.PlaceRequest'
+      responses:
+        "200":
+          description: transaction id
+          schema:
+            type: string
+      summary: Place
+      tags:
+      - Transaction
+  /v1/api/refund:
+    post:
+      description: Refund a transaction
+      parameters:
+      - description: 'The JWT token. Example: Bearer {token}'
+        in: header
+        name: Authorization
+        type: string
+      - description: Generate token
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/transaction.RefundRequest'
+      responses:
+        "200":
+          description: OK
+      summary: Refund
+      tags:
+      - Transaction
+  /v1/auth/token:
+    post:
+      description: Generates a token
+      parameters:
+      - description: Generate token
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/auth.CreateTokenRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.CreateTokenResponse'
+      summary: Create Token
+      tags:
+      - Authorization
+swagger: "2.0"

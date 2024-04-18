@@ -1,0 +1,200 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Payment API",
+        "title": "Payment API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/v1/api/listtx": {
+            "get": {
+                "description": "List all the transactions",
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "ListTx",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The JWT token. Example: Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/transaction.ListTxResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/api/place": {
+            "post": {
+                "description": "Place a transaction",
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Place",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The JWT token. Example: Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Generate token",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/transaction.PlaceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "transaction id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/api/refund": {
+            "post": {
+                "description": "Refund a transaction",
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Refund",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The JWT token. Example: Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Generate token",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/transaction.RefundRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/auth/token": {
+            "post": {
+                "description": "Generates a token",
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Create Token",
+                "parameters": [
+                    {
+                        "description": "Generate token",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.CreateTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/auth.CreateTokenResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "auth.CreateTokenRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.CreateTokenResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "repos.Tx": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "merchant_id": {
+                    "type": "string"
+                },
+                "tx_type": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "transaction.ListTxResponse": {
+            "type": "object",
+            "properties": {
+                "transactions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/repos.Tx"
+                    }
+                }
+            }
+        },
+        "transaction.PlaceRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                }
+            }
+        },
+        "transaction.RefundRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
