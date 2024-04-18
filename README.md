@@ -12,8 +12,12 @@ various payment methods and integrates with external payment gateways.
 
 ### Installation
 
+Once you have golang [installed go][golang-install]
 Once you have [installed Docker][docker-install]
 
 ### Running payment api
 
 `make docker-up` running the payment app at "localhost:8090/swagger/index.html"
+
+[golang-install]:   http://golang.org/doc/install.html#releases
+[docker-install]:   https://docs.docker.com/engine/install/
