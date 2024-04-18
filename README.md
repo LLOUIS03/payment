@@ -2,7 +2,13 @@
 
 ## Description
 
-[Provide a brief description of your project.]
+/**
+ * Payment API
+ * 
+ * This API provides functionality for processing payments. It allows users to make payments, 
+ * retrieve payment details, and perform other payment-related operations. The API supports 
+ * various payment methods and integrates with external payment gateways.
+ */
 
 ## Table of Contents
 
